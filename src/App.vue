@@ -3,8 +3,8 @@
     <ag-grid-vue
       style="width: 500px; height: 500px;"
       class="ag-theme-balham"
-      columnDefs
-      rowData
+      :columnDefs="columnDefs"
+      :rowData="rowData"
       rowSelection="multiple"
     ></ag-grid-vue>
   </div>
@@ -12,93 +12,50 @@
 
 
 //$ npm install --save ag-grid-community ag-grid-vue vue-property-decorator
-// import SafaGrid from "./components/SafaGrid.vue";
 <script>
 import { AgGridVue } from "ag-grid-vue";
 import { Sh_ManagerConfirm_List } from "./assets/info";
 export default {
   name: "App",
-  props: ["Sh_ManagerConfirm_List"],
   data() {
     return {
-      columnDefs: 2,
-      rowData: 2
+      gridProps: Sh_ManagerConfirm_List,
+      columnDefs: null,
+      rowData: null
     };
   },
   components: {
     AgGridVue
   },
-  computed: {
-    cons() {
-      console.log(props);
-    }
+
+  beforeMount() {
+    this.columnDefs = [
+      {
+        headerName: this.gridProps[0].name,
+        field: this.gridProps[0].field,
+        checkboxSelection: true
+      },
+      { headerName: "Model", field: "model" },
+      { headerName: "Price", field: "price" }
+    ];
   },
-  created() {
-    // this.columnDefs = Sh_ManagerConfirm_List.forEach(
-    //   ({ name, field, sortable }) => {
-    //     return [
-    //       {
-    //         headerName: name,
-    //         field: field,
-    //         sortable: sortable,
-    //         filter: true
-    //       }
-    //     ];
-    //   }
-    // );
-    // this.columnDefs = [
-    //   { headerName: "Make", field: "make", checkboxSelection: true },
-    //   { headerName: "Model", field: "model" },
-    //   { headerName: "Price", field: "price" }
-    // ];
-    // this.rowData = [
-    //   { make: "Toyota", model: "Celica", price: 35000 },
-    //   { make: "Ford", model: "Mondeo", price: 32000 },
-    //   { make: "Porsche", model: "Boxter", price: 72000 }
-    // ];
-    // @grid-ready="onGridReady"
-    // fetch("https://api.myjson.com/bins/15psn9")
-    //   .then(result => result.json())
-    //   .then(rowData => (this.rowData = rowData));
-  },
-  methods: {
-    // loadColumn() {
-    //   this.columnDefs = Sh_ManagerConfirm_List.forEach(el => {
-    //     return {
-    //       headerName: el.name,
-    //       field: el.field,
-    //       sortable: el.sortable,
-    //       filter: true
-    //     };
-    //   });
-    // },
-    // loadRow() {
-    //   this.rowData = Sh_ManagerConfirm_List.forEach(el => {
-    //     return {
-    //       [el.field]: "3"
-    //     };
-    //   });
-    // }
-    // onGridReady(params) {
-    //   this.gridApi = params.api;
-    //   this.columnApi = params.columnApi;
-    // },
-    // getSelectedRows() {
-    //   const selectedNodes = this.gridApi.getSelectedNodes();
-    //   const selectedData = selectedNodes.map(node => node.data);
-    //   const selectedDataStringPresentation = selectedData
-    //     .map(node => node.make + " " + node.model)
-    //     .join(", ");
-    //   alert(`Selected nodes: ${selectedDataStringPresentation}`);
-    // }
+  watch: {
+    columnDefs: () =>
+      Sh_ManagerConfirm_List.forEach(el => {
+        return { headerName: el.name, field: el.field };
+      }),
+    rowData: () =>
+      Sh_ManagerConfirm_List.forEach(el => {
+        return { [el.name]: el.label };
+      })
   }
 };
 </script>
 
 
 <style lang="scss">
-@import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
-@import "../node_modules/ag-grid-community/dist/styles/ag-theme-balham.css";
+/* @import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
+@import "../node_modules/ag-grid-community/dist/styles/ag-theme-balham.css"; */
 @import "../node_modules/ag-grid-community/src/styles/ag-grid.scss";
 @import "../node_modules/ag-grid-community/src/styles/ag-theme-balham/sass/ag-theme-balham.scss";
 // @import "../node_modules/ag-grid-community/src/styles/ag-grid.scss";

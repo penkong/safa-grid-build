@@ -1,5 +1,5 @@
 import Vue from "vue";
-import 'ag-grid-enterprise';
+// import 'ag-grid-enterprise';
 import App from "./App.vue";
 
 Vue.config.productionTip = false;

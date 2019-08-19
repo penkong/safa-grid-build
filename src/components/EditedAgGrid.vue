@@ -13,8 +13,12 @@
 <script>
 //$ npm install --save ag-grid-community ag-grid-vue vue-property-decorator
 import { AgGridVue } from "ag-grid-vue";
+// import axios from "axios";
 export default {
   name: "App",
+  components: {
+    AgGridVue
+  },
   props: {
     items: {
       type: Array,
@@ -28,77 +32,19 @@ export default {
       rowData: null
     };
   },
-  components: {
-    AgGridVue
-  },
-  computed: {
-    loadColumn() {
-      let columns;
-      for (let i = 0; i < this.gridProps.length - 1; i++) {
-        columns = [{ headerName: this.gridProps[i].label }];
-      }
-      return columns;
-    }
-  },
+
+  computed: {},
   beforeMount() {
     this.columnDefs = [
-      { headerName: thi[0].label },
-      { headerName: this.gridProps[1].label },
-      { headerName: this.gridProps[2].label },
-      { headerName: this.gridProps[3].label },
-      { headerName: this.gridProps[4].label },
-      { headerName: this.gridProps[5].label }
+      { headerName: this.items[1].label },
+      { headerName: this.items[2].label },
+      { headerName: this.items[3].label },
+      { headerName: this.items[4].label },
+      { headerName: this.items[5].label }
     ];
-    this.rowData = [
-      {
-        [this.gridProps[0].label]: "33",
-        [this.gridProps[1].label]: "33",
-        [this.gridProps[2].label]: "33",
-        [this.gridProps[3].label]: "33",
-        [this.gridProps[4].label]: "33",
-        [this.gridProps[5].label]: "33"
-      },
-      {
-        [this.gridProps[0].label]: "33",
-        [this.gridProps[1].label]: "33",
-        [this.gridProps[2].label]: "33",
-        [this.gridProps[3].label]: "33",
-        [this.gridProps[4].label]: "33",
-        [this.gridProps[5].label]: "33"
-      },
-      {
-        [this.gridProps[0].label]: "33",
-        [this.gridProps[1].label]: "33",
-        [this.gridProps[2].label]: "33",
-        [this.gridProps[3].label]: "33",
-        [this.gridProps[4].label]: "33",
-        [this.gridProps[5].label]: "33"
-      },
-      {
-        [this.gridProps[0].label]: "33",
-        [this.gridProps[1].label]: "33",
-        [this.gridProps[2].label]: "33",
-        [this.gridProps[3].label]: "33",
-        [this.gridProps[4].label]: "33",
-        [this.gridProps[5].label]: "33"
-      },
-      {
-        [this.gridProps[0].label]: "33",
-        [this.gridProps[1].label]: "33",
-        [this.gridProps[2].label]: "33",
-        [this.gridProps[3].label]: "33",
-        [this.gridProps[4].label]: "33",
-        [this.gridProps[5].label]: "33"
-      },
-      {
-        [this.gridProps[0].label]: "33",
-        [this.gridProps[1].label]: "33",
-        [this.gridProps[2].label]: "33",
-        [this.gridProps[3].label]: "33",
-        [this.gridProps[4].label]: "33",
-        [this.gridProps[5].label]: "33"
-      }
-    ];
+    fetch("https://api.myjson.com/bins/15psn9")
+      .then(result => result.json())
+      .then(rowData => (this.rowData = rowData));
   },
   watch: {}
 };
@@ -106,6 +52,6 @@ export default {
 
 
 <style lang="scss">
-@import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
-@import "../node_modules/ag-grid-community/dist/styles/ag-theme-balham.css";
+@import "../../node_modules/ag-grid-community/dist/styles/ag-grid.css";
+@import "../../node_modules/ag-grid-community/dist/styles/ag-theme-balham.css";
 </style>

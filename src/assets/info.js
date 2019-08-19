@@ -1,5 +1,5 @@
 /* eslint-disable */
-const Sh_ManagerConfirm_List = [{
+export const Sh_ManagerConfirm_List = [{
         name: "EumManagerConfirmLicence",
         required: true,
         label: "نوع مجوز تأیید مدیران",
@@ -56,4 +56,3 @@ const Sh_ManagerConfirm_List = [{
         sortable: true
     }
 ];
-const info = JSON.stringify(Sh_ManagerConfirm_List);

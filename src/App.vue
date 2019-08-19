@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <EditedAgGrid :items="items" />
+    <EditedAgGrid :defineCol="defineCol" :itemsForRow="itemsForRow" />
   </div>
 </template>
 
@@ -15,7 +15,8 @@ export default {
   },
   data() {
     return {
-      items: Sh_ManagerConfirm_List
+      defineCol: Sh_ManagerConfirm_List,
+      itemsForRow: null
     };
   }
 };

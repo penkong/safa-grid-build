@@ -2,7 +2,7 @@
   <div>
     <ag-grid-vue
       style="width: 100%; height: 100vh;"
-      class="ag-theme-balham"
+      class="ag-theme-material"
       :columnDefs="loadColumn"
       :rowData="rowData"
       rowSelection="multiple"
@@ -19,7 +19,11 @@ export default {
     AgGridVue
   },
   props: {
-    items: {
+    defineCol: {
+      type: Array,
+      required: true
+    },
+    itemsForRow: {
       type: Array,
       required: true
     }
@@ -30,11 +34,10 @@ export default {
       rowData: null
     };
   },
-
   computed: {
     loadColumn() {
       let arr = [];
-      let info = this.items;
+      let info = this.defineCol;
       for (let i = 0; i < info.length; i++) {
         arr.push({ headerName: info[i].label, field: info[i].field });
       }
@@ -45,13 +48,12 @@ export default {
     fetch("https://api.myjson.com/bins/15psn9")
       .then(result => result.json())
       .then(rowData => (this.rowData = rowData));
-  },
-  watch: {}
+  }
 };
 </script>
 
 
 <style lang="scss">
-@import "../../node_modules/ag-grid-community/dist/styles/ag-grid.css";
-@import "../../node_modules/ag-grid-community/dist/styles/ag-theme-balham.css";
+@import "../../node_modules/ag-grid-community/src/styles/ag-grid.scss";
+@import "../../node_modules/ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material.scss";
 </style>

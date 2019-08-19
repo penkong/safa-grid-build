@@ -1,9 +1,9 @@
 <template>
   <div>
     <ag-grid-vue
-      style="width: 500px; height: 500px;"
+      style="width: 100%; height: 100vh;"
       class="ag-theme-balham"
-      :columnDefs="columnDefs"
+      :columnDefs="loadColumn"
       :rowData="rowData"
       rowSelection="multiple"
     ></ag-grid-vue>
@@ -13,9 +13,8 @@
 <script>
 //$ npm install --save ag-grid-community ag-grid-vue vue-property-decorator
 import { AgGridVue } from "ag-grid-vue";
-// import axios from "axios";
 export default {
-  name: "App",
+  name: "EditedAgGrid",
   components: {
     AgGridVue
   },
@@ -27,21 +26,22 @@ export default {
   },
   data() {
     return {
-      item: null,
       columnDefs: null,
       rowData: null
     };
   },
 
-  computed: {},
-  beforeMount() {
-    this.columnDefs = [
-      { headerName: this.items[1].label },
-      { headerName: this.items[2].label },
-      { headerName: this.items[3].label },
-      { headerName: this.items[4].label },
-      { headerName: this.items[5].label }
-    ];
+  computed: {
+    loadColumn() {
+      let arr = [];
+      let info = this.items;
+      for (let i = 0; i < info.length; i++) {
+        arr.push({ headerName: info[i].label, field: info[i].field });
+      }
+      return (this.columnDefs = arr);
+    }
+  },
+  created() {
     fetch("https://api.myjson.com/bins/15psn9")
       .then(result => result.json())
       .then(rowData => (this.rowData = rowData));

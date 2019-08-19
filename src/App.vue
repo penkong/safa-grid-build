@@ -21,4 +21,12 @@ export default {
 };
 </script>
 <style lang="scss">
+html {
+  margin: 0;
+  padding: 0;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
 </style>

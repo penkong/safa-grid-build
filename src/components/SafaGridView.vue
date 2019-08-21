@@ -14,7 +14,7 @@
 //$ npm install --save ag-grid-community ag-grid-vue vue-property-decorator
 import { AgGridVue } from "ag-grid-vue";
 export default {
-  name: "EditedAgGrid",
+  name: "SafaGridView",
   components: {
     AgGridVue
   },

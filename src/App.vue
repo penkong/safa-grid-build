@@ -1,17 +1,17 @@
 <template>
   <div class="app">
-    <EditedAgGrid :defineCol="defineCol" :itemsForRow="itemsForRow" />
+    <SafaGridView :defineCol="defineCol" :itemsForRow="itemsForRow" />
   </div>
 </template>
 
 <script>
 //$ npm install --save ag-grid-community ag-grid-vue vue-property-decorator
-import EditedAgGrid from "./components/EditedAgGrid";
+import SafaGridView from "./components/SafaGridView";
 import { Sh_ManagerConfirm_List } from "./assets/info";
 export default {
   name: "App",
   components: {
-    EditedAgGrid
+    SafaGridView
   },
   data() {
     return {

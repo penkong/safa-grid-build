@@ -4,12 +4,12 @@
     <button @click.prevent="onEditItem">EDIT ITEM</button>
     <button v-if="!showForm" @click.prevent="onShowForm">CREATE ITEM</button>
     <form v-if="showForm" @submit.prevent="onCreateRow" style="margin-top: 20px;">
-      <div class="form-group" v-for="col in columnDefs" :key="col.name">
-        <label for="name">name</label>
-        <input required="{require}" type="text" id="name" />
+      <div class="form-group" v-for="newRowLabel in newRowLabels" :key="newRowLabel">
+        <label :for="{newRowLabel}">{{ newRowLabel }}</label>
+        <input type="text" :id="{newRowLabel}" />
       </div>
       <div>
-        <button>Submit</button>
+        <button type="submit">Submit</button>
       </div>
     </form>
     <ag-grid-vue
@@ -75,9 +75,8 @@ export default {
       showGrid: false,
       sideBar: false,
       showForm: false,
-      newRow: {
-        // [columnDefs.map(({ label }) => Object.values(label).join(""))]: String
-      },
+      // [columnDefs.map(({ label }) => Object.values(label).join(""))]: String
+      newRowLabels: {},
       searchTerm: "",
       formProps: {}
     };
@@ -85,6 +84,7 @@ export default {
   computed: {
     onShowForm() {
       this.showForm = !this.showForm;
+      return;
     },
     loadAlign() {
       return this.gridAlign;
@@ -99,28 +99,44 @@ export default {
       return (this.columnDefs = arr);
     },
 
-    loadNewRow() {
+    loadARow() {
       // it give us an array.
       let newRowFromColumns = this.defineCols.map(({ headerName }) =>
         Object.values(headerName).join("")
       );
-      for (let i = 0; i < newRowFromColumns.length; i++) {
-        this.$set();
+      for (let i of newRowFromColumns) {
+        this.newRowLabels[i] = "hello";
       }
+      // Vue.set(this.data, 'test', 'testing')
+      // this.$set(this.data, "newRowLabels", "newRowFromColumns");
+      // this.newRowLabels = newRowFromColumns;
     },
 
-    loadRowData() {}
+    loadRowData() {
+      let newRowFromColumns = this.defineCols.map(({ headerName }) =>
+        Object.values(headerName).join("")
+      );
+
+      for (let i of newRowFromColumns) {
+        this.newRowLabels[i] = "hello";
+      }
+    }
   },
+  // watch: {
+  //   newRowLabels: "loadNewRow"
+  // },
   created() {
     fetch("https://api.myjson.com/bins/15psn9")
       .then(result => result.json())
       .then(rowData => (this.rowData = rowData));
+    // this.loadNewRow();
+    // console.log(this.newRowLabels);
   },
   methods: {
     onCreateRow() {
       this.$emit(
         "onCreateRow",
-        this.$set(this.definerows, this.rowData.length, this.newRow)
+        this.$set(this.definerows, this.rowData.length, this.newRowLabels)
       );
       // this.showForm = false;
       // this.formProps = {};

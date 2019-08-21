@@ -6,7 +6,7 @@
     <form v-if="showForm" @submit.prevent="onCreateRow" style="margin-top: 20px;">
       <div class="form-group" v-for="col in columnDefs" :key="col.name">
         <label for="name">name</label>
-        <input type="text" id="name" />
+        <input required="{require}" type="text" id="name" />
       </div>
       <div>
         <button>Submit</button>
@@ -19,7 +19,7 @@
       :rowData="rowData"
       rowSelection="multiple"
     >
-      <slot v-for="item in ourItems" :key="item" :name="ourItems"></slot>
+      <slot :name="ourItems"></slot>
     </ag-grid-vue>
   </div>
 </template>
@@ -71,13 +71,15 @@ export default {
       gridOptions: null,
       columnDefs: null,
       rowData: null,
+      rowCount: null,
       showGrid: false,
       sideBar: false,
-      rowCount: null,
-      newRow: {},
+      showForm: false,
+      newRow: {
+        // [columnDefs.map(({ label }) => Object.values(label).join(""))]: String
+      },
       searchTerm: "",
-      formProps: {},
-      showForm: false
+      formProps: {}
     };
   },
   computed: {
@@ -97,14 +99,17 @@ export default {
       return (this.columnDefs = arr);
     },
 
-    loadRows() {
-      let arr = [];
-      let info = this.definerows;
-      for (let i = 0; i < info.length; i++) {
-        arr.push({ text: "add logic here" });
+    loadNewRow() {
+      // it give us an array.
+      let newRowFromColumns = this.defineCols.map(({ headerName }) =>
+        Object.values(headerName).join("")
+      );
+      for (let i = 0; i < newRowFromColumns.length; i++) {
+        this.$set();
       }
-      return (this.rowData = arr);
-    }
+    },
+
+    loadRowData() {}
   },
   created() {
     fetch("https://api.myjson.com/bins/15psn9")
@@ -117,7 +122,8 @@ export default {
         "onCreateRow",
         this.$set(this.definerows, this.rowData.length, this.newRow)
       );
-      this.showForm = false;
+      // this.showForm = false;
+      // this.formProps = {};
     },
     onSearchItem() {
       this.$emit("onSearchItem", this.searchTerm);

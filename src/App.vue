@@ -1,6 +1,12 @@
 <template>
   <div class="app">
-    <SafaGridView :defineCol="defineCol" :itemsForRow="itemsForRow" />
+    <SafaGridView
+      :defineCols="defineCols"
+      :definerows="definerows"
+      :ourItems="ourItems"
+      :gridAlign="gridAlign"
+      @rowCreate="rowCreate"
+    />
   </div>
 </template>
 
@@ -15,9 +21,14 @@ export default {
   },
   data() {
     return {
-      defineCol: Sh_ManagerConfirm_List,
-      itemsForRow: null
+      defineCols: Sh_ManagerConfirm_List,
+      definerows: null,
+      ourItems: null,
+      gridAlign: "righted"
     };
+  },
+  methods: {
+    rowCreate(formProps) {}
   }
 };
 </script>
@@ -29,5 +40,10 @@ html {
 body {
   margin: 0;
   padding: 0;
+}
+
+.app {
+  padding: 20px;
+  margin: 0 20px;
 }
 </style>

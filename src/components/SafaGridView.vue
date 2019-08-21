@@ -2,10 +2,15 @@
   <div :class="loadAlign">
     <button @click.prevent="onSearchItem">SEARCH ITEM</button>
     <button @click.prevent="onEditItem">EDIT ITEM</button>
-    <form @submit.prevent="onCreateRow" style="margin-top: 20px;">
-      <label for="name">name</label>
-      <input type="text" id="name" />
-      <button>CREATE ITEM</button>
+    <button v-if="!showForm" @click.prevent="onShowForm">CREATE ITEM</button>
+    <form v-if="showForm" @submit.prevent="onCreateRow" style="margin-top: 20px;">
+      <div class="form-group" v-for="col in columnDefs" :key="col.name">
+        <label for="name">name</label>
+        <input type="text" id="name" />
+      </div>
+      <div>
+        <button>Submit</button>
+      </div>
     </form>
     <ag-grid-vue
       style="width: 90%; height: 90vh;"
@@ -14,7 +19,7 @@
       :rowData="rowData"
       rowSelection="multiple"
     >
-      <slot :name="ourItems"></slot>
+      <slot v-for="item in ourItems" :key="item" :name="ourItems"></slot>
     </ag-grid-vue>
   </div>
 </template>
@@ -69,10 +74,16 @@ export default {
       showGrid: false,
       sideBar: false,
       rowCount: null,
-      formProps: null
+      newRow: {},
+      searchTerm: "",
+      formProps: {},
+      showForm: false
     };
   },
   computed: {
+    onShowForm() {
+      this.showForm = !this.showForm;
+    },
     loadAlign() {
       return this.gridAlign;
     },
@@ -104,11 +115,12 @@ export default {
     onCreateRow() {
       this.$emit(
         "onCreateRow",
-        this.set(this.definerows, index, this.formProps)
+        this.$set(this.definerows, this.rowData.length, this.newRow)
       );
+      this.showForm = false;
     },
     onSearchItem() {
-      this.$emit("onSearchItem", this.formProps);
+      this.$emit("onSearchItem", this.searchTerm);
     },
     onEditItem() {
       this.$emit("onEditItem", this.formProps);

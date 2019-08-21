@@ -6,8 +6,8 @@
       :ourItems="ourItems"
       :gridAlign="gridAlign"
       @onCreateRow="createRow"
-      @onEditItem="editItem"
       @onSearchItem="searchItem"
+      @onEditItem="editItem"
     />
   </div>
 </template>
@@ -30,7 +30,7 @@ export default {
     };
   },
   methods: {
-    createRow(formProps) {
+    createRow(newRow) {
       console.log("created row");
     },
     editItem(formProps) {

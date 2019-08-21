@@ -5,7 +5,9 @@
       :definerows="definerows"
       :ourItems="ourItems"
       :gridAlign="gridAlign"
-      @rowCreate="rowCreate"
+      @onCreateRow="createRow"
+      @onEditItem="editItem"
+      @onSearchItem="searchItem"
     />
   </div>
 </template>
@@ -28,7 +30,15 @@ export default {
     };
   },
   methods: {
-    rowCreate(formProps) {}
+    createRow(formProps) {
+      console.log("created row");
+    },
+    editItem(formProps) {
+      console.log("edit Item");
+    },
+    searchItem(formProps) {
+      console.log("search item");
+    }
   }
 };
 </script>

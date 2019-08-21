@@ -1,9 +1,11 @@
 <template>
   <div :class="loadAlign">
-    <form @submit.prevent="rowCreatorIcon" style="margin-top: 20px;">
+    <button @click.prevent="onSearchItem">SEARCH ITEM</button>
+    <button @click.prevent="onEditItem">EDIT ITEM</button>
+    <form @submit.prevent="onCreateRow" style="margin-top: 20px;">
+      <label for="name">name</label>
       <input type="text" id="name" />
-      <label for="name">نام</label>
-      <button>create ICON</button>
+      <button>CREATE ITEM</button>
     </form>
     <ag-grid-vue
       style="width: 90%; height: 90vh;"
@@ -66,7 +68,8 @@ export default {
       rowData: null,
       showGrid: false,
       sideBar: false,
-      rowCount: null
+      rowCount: null,
+      formProps: null
     };
   },
   computed: {
@@ -98,8 +101,17 @@ export default {
       .then(rowData => (this.rowData = rowData));
   },
   methods: {
-    rowCreatorIcon() {
-      this.$emit("rowCreate", this.set(this.definerows, index, obj));
+    onCreateRow() {
+      this.$emit(
+        "onCreateRow",
+        this.set(this.definerows, index, this.formProps)
+      );
+    },
+    onSearchItem() {
+      this.$emit("onSearchItem", this.formProps);
+    },
+    onEditItem() {
+      this.$emit("onEditItem", this.formProps);
     }
   }
 };
@@ -110,8 +122,14 @@ export default {
 @import "../../node_modules/ag-grid-community/src/styles/ag-grid.scss";
 @import "../../node_modules/ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material.scss";
 div {
+  button {
+    display: block;
+    width: 30%;
+    height: 40px;
+    border-radius: 10px;
+    background-color: rgb(204, 133, 27);
+  }
   form {
-    text-align: right;
     button {
       display: block;
       width: 30%;
@@ -122,7 +140,7 @@ div {
   }
 }
 .righted {
-  text-align: right;
+  text-align: left;
   background-color: rgb(209, 157, 157);
 }
 .lefted {

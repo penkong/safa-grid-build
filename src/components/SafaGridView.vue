@@ -1,5 +1,5 @@
 <template>
-  <div :class="loadAlign">
+  <div :class="onLoadAlign">
     <button @click.prevent="onSearchItem">SEARCH ITEM</button>
     <button @click.prevent="onEditItem">EDIT ITEM</button>
     <button v-if="!showForm" @click.prevent="showForm=true">CREATE ITEM</button>
@@ -88,7 +88,7 @@ export default {
     onShowForm() {
       this.showForm = !this.showForm;
     },
-    loadAlign() {
+    onLoadAlign() {
       return this.gridAlign;
     },
     onLoadColumns() {

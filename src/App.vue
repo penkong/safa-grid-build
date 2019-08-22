@@ -15,7 +15,8 @@
 <script>
 //$ npm install --save ag-grid-community ag-grid-vue vue-property-decorator
 import SafaGridView from "./components/SafaGridView";
-import { Sh_ManagerConfirm_List } from "./assets/info";
+import { Sh_ManagerConfirm_List } from "./assets/colInfo";
+import { Sh_ManagerConfirm_Row } from "./assets/rowInfo";
 export default {
   name: "App",
   components: {
@@ -24,7 +25,7 @@ export default {
   data() {
     return {
       defineCols: Sh_ManagerConfirm_List,
-      definerows: null,
+      definerows: Sh_ManagerConfirm_Row,
       ourItems: null,
       gridAlign: "righted"
     };

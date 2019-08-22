@@ -2,7 +2,8 @@
   <div :class="loadAlign">
     <button @click.prevent="onSearchItem">SEARCH ITEM</button>
     <button @click.prevent="onEditItem">EDIT ITEM</button>
-    <button v-if="!showForm" @click.prevent="onShowForm">CREATE ITEM</button>
+    <button v-if="!showForm" @click.prevent="showForm=true">CREATE ITEM</button>
+    <!-- <button :disabled="showGrid" >Create Grid</button> -->
     <form v-if="showForm" @submit.prevent="onCreateRow" style="margin-top: 20px;">
       <div class="form-group" v-for="newRowLabel in newRowLabels" :key="newRowLabel">
         <label :for="{newRowLabel}">{{ newRowLabel }}</label>
@@ -84,7 +85,6 @@ export default {
   computed: {
     onShowForm() {
       this.showForm = !this.showForm;
-      return;
     },
     loadAlign() {
       return this.gridAlign;
@@ -94,31 +94,30 @@ export default {
       let arr = [];
       let info = this.defineCols;
       for (let i = 0; i < info.length; i++) {
-        arr.push({ headerName: info[i].label, field: info[i].field });
+        arr.push({
+          headerName: info[i].label,
+          field: info[i].field,
+          sortable: true,
+          filter: true
+        });
       }
       return (this.columnDefs = arr);
     },
 
-    loadARow() {
-      // it give us an array.
+    loadARowForCreateForm() {
+      // it give us an array. of header names.
       let newRowFromColumns = this.defineCols.map(({ headerName }) =>
         Object.values(headerName).join("")
       );
       for (let i of newRowFromColumns) {
         this.newRowLabels[i] = "hello";
       }
-      // Vue.set(this.data, 'test', 'testing')
-      // this.$set(this.data, "newRowLabels", "newRowFromColumns");
-      // this.newRowLabels = newRowFromColumns;
     },
 
     loadRowData() {
-      let newRowFromColumns = this.defineCols.map(({ headerName }) =>
-        Object.values(headerName).join("")
-      );
-
-      for (let i of newRowFromColumns) {
-        this.newRowLabels[i] = "hello";
+      let arr = [];
+      for (item of this.columnDefs) {
+        arr.push(item.field);
       }
     }
   },

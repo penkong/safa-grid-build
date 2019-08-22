@@ -16,8 +16,8 @@
     <ag-grid-vue
       style="width: 90%; height: 90vh;"
       class="ag-theme-material"
-      :columnDefs="loadColumn"
-      :rowData="rowData"
+      :columnDefs="onLoadColumns"
+      :rowData="onLoadRows"
       rowSelection="multiple"
     >
       <slot :name="ourItems"></slot>
@@ -28,6 +28,8 @@
 <script>
 //$ npm install --save ag-grid-community ag-grid-vue vue-property-decorator
 import { AgGridVue } from "ag-grid-vue";
+import { loadColumn } from "../helpers/loadColumn";
+import { loadRowsBaseOnProps } from "../helpers/loadRowsBaseOnProps";
 export default {
   name: "SafaGridView",
   components: {
@@ -89,21 +91,16 @@ export default {
     loadAlign() {
       return this.gridAlign;
     },
-
-    loadColumn() {
-      let arr = [];
-      let info = this.definedCols;
-      for (let i = 0; i < info.length; i++) {
-        arr.push({
-          headerName: info[i].label,
-          field: info[i].field,
-          sortable: true,
-          filter: true
-        });
-      }
-      return (this.columnDefs = arr);
+    onLoadColumns() {
+      return loadColumn(this.definedCols, this.columnDefs);
     },
-
+    onLoadRows() {
+      return loadRowsBaseOnProps(
+        this.definedCols,
+        this.definedrows,
+        this.rowData
+      );
+    },
     loadARowForCreateForm() {
       // it give us an array. of header names.
       let newRowFromColumns = this.definedCols.map(({ headerName }) =>
@@ -112,25 +109,6 @@ export default {
       for (let i of newRowFromColumns) {
         this.newRowLabels[i] = "hello";
       }
-    },
-
-    loadRowsBaseOnProps() {
-      let arr = [];
-      let rv = {};
-      let rowArr = [];
-      for (let item of this.definedCols) {
-        arr.push(item.field);
-      }
-      // arr = ["EumManagerConfirmLicence", "UserName", "ConfirmationDate", "ConfirmationTime", "CI_ResourceManagerConfirm", "CI_ResourceManagerConfirmDetails", "Comments"]
-      for (let i of arr) {
-        rv[i] = "";
-      }
-      // rv = {EumManagerConfirmLicence: "", UserName: "", ConfirmationDate: "", ConfirmationTime: "", CI_ResourceManagerConfirm: "", …}
-      // we need [rv, rv, rv];
-      for (let i = 0; i < this.definedrows.length; i++) {
-        rowArr.push(rv);
-      }
-      return (this.rowData = rowArr);
     }
   },
   methods: {

@@ -1,8 +1,8 @@
 <template>
   <div class="app">
     <SafaGridView
-      :defineCols="defineCols"
-      :definerows="definerows"
+      :definedCols="definedCols"
+      :definedrows="definedrows"
       :ourItems="ourItems"
       :gridAlign="gridAlign"
       @onCreateRow="createRow"
@@ -24,8 +24,8 @@ export default {
   },
   data() {
     return {
-      defineCols: Sh_ManagerConfirm_List,
-      definerows: Sh_ManagerConfirm_Row,
+      definedCols: Sh_ManagerConfirm_List,
+      definedrows: Sh_ManagerConfirm_Row,
       ourItems: null,
       gridAlign: "righted"
     };

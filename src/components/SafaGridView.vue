@@ -34,7 +34,7 @@ export default {
     AgGridVue
   },
   props: {
-    defineCols: {
+    definedCols: {
       type: Array,
       required: true,
       defualt: [],
@@ -42,7 +42,7 @@ export default {
         return;
       }
     },
-    definerows: {
+    definedrows: {
       type: Array,
       required: true,
       defualt: [],
@@ -92,7 +92,7 @@ export default {
 
     loadColumn() {
       let arr = [];
-      let info = this.defineCols;
+      let info = this.definedCols;
       for (let i = 0; i < info.length; i++) {
         arr.push({
           headerName: info[i].label,
@@ -106,7 +106,7 @@ export default {
 
     loadARowForCreateForm() {
       // it give us an array. of header names.
-      let newRowFromColumns = this.defineCols.map(({ headerName }) =>
+      let newRowFromColumns = this.definedCols.map(({ headerName }) =>
         Object.values(headerName).join("")
       );
       for (let i of newRowFromColumns) {
@@ -116,9 +116,14 @@ export default {
 
     loadRowData() {
       let arr = [];
-      for (item of this.columnDefs) {
+      var rv = {};
+      for (item of this.definedCols) {
         arr.push(item.field);
       }
+      for (let i of arr) {
+        rv[i] = this.definedrows[i];
+      }
+      return rv;
     }
   },
   // watch: {
@@ -135,7 +140,7 @@ export default {
     onCreateRow() {
       this.$emit(
         "onCreateRow",
-        this.$set(this.definerows, this.rowData.length, this.newRowLabels)
+        this.$set(this.definedrows, this.rowData.length, this.newRowLabels)
       );
       // this.showForm = false;
       // this.formProps = {};

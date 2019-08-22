@@ -114,27 +114,24 @@ export default {
       }
     },
 
-    loadRowData() {
+    loadRowsBaseOnProps() {
       let arr = [];
-      var rv = {};
-      for (item of this.definedCols) {
+      let rv = {};
+      let rowArr = [];
+      for (let item of this.definedCols) {
         arr.push(item.field);
       }
+      // arr = ["EumManagerConfirmLicence", "UserName", "ConfirmationDate", "ConfirmationTime", "CI_ResourceManagerConfirm", "CI_ResourceManagerConfirmDetails", "Comments"]
       for (let i of arr) {
-        rv[i] = this.definedrows[i];
+        rv[i] = "";
       }
-      return rv;
+      // rv = {EumManagerConfirmLicence: "", UserName: "", ConfirmationDate: "", ConfirmationTime: "", CI_ResourceManagerConfirm: "", …}
+      // we need [rv, rv, rv];
+      for (let i = 0; i < this.definedrows.length; i++) {
+        rowArr.push(rv);
+      }
+      return (this.rowData = rowArr);
     }
-  },
-  // watch: {
-  //   newRowLabels: "loadNewRow"
-  // },
-  created() {
-    fetch("https://api.myjson.com/bins/15psn9")
-      .then(result => result.json())
-      .then(rowData => (this.rowData = rowData));
-    // this.loadNewRow();
-    // console.log(this.newRowLabels);
   },
   methods: {
     onCreateRow() {

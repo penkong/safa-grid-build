@@ -6,8 +6,8 @@
     <!-- <button :disabled="showGrid" >Create Grid</button> -->
     <form v-if="showForm" @submit.prevent="onCreateRow" style="margin-top: 20px;">
       <div class="form-group" v-for="newRowLabel in newRowLabels" :key="newRowLabel">
-        <label :for="{newRowLabel}">{{ newRowLabel }}</label>
-        <input type="text" :id="{newRowLabel}" />
+        <Label :for="{newRowLabel}">{{ newRowLabel }}</Label>
+        <Input :id="{newRowLabel}" />
       </div>
       <div>
         <button type="submit">Submit</button>
@@ -28,11 +28,16 @@
 <script>
 //$ npm install --save ag-grid-community ag-grid-vue vue-property-decorator
 import { AgGridVue } from "ag-grid-vue";
+import Input from "./Input/Input";
+import Label from "./Label/Label";
 import { loadColumn } from "../helpers/loadColumn";
 import { loadRowsBaseOnProps } from "../helpers/loadRowsBaseOnProps";
+import { loadOneRow } from "../helpers/loadOneRow";
 export default {
   name: "SafaGridView",
   components: {
+    Label,
+    Input,
     AgGridVue
   },
   props: {
@@ -102,13 +107,7 @@ export default {
       );
     },
     loadARowForCreateForm() {
-      // it give us an array. of header names.
-      let newRowFromColumns = this.definedCols.map(({ headerName }) =>
-        Object.values(headerName).join("")
-      );
-      for (let i of newRowFromColumns) {
-        this.newRowLabels[i] = "hello";
-      }
+      return loadOneRow(this.definedCols, this.newRowLabels);
     }
   },
   methods: {

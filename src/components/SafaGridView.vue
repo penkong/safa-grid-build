@@ -2,18 +2,19 @@
   <div :class="onLoadAlign">
     <button @click.prevent="onSearchItem">SEARCH ITEM</button>
     <button @click.prevent="onEditItem">EDIT ITEM</button>
-    <button v-if="!showForm" @click.prevent="showForm=true">CREATE ITEM</button>
-    <!-- <button :disabled="showGrid" >Create Grid</button> -->
-    <form v-if="showForm" @submit.prevent="onCreateRow" style="margin-top: 20px;">
-      <div v-for="rowLabel in onLoadRowForForm" :key="rowLabel">
-        <span>{{ rowLabel }}</span>
-      </div>
-      <!-- <div class="form-group" v-for="newRowLabel in newRowLabels" :key="newRowLabel">
+    <!-- <button v-if="!showForm" @click.prevent="onShowForm">{{ showForm }}</button>-->
+    <form @submit.prevent="onCreateRow" style="margin-top: 20px;">
+      <div :oneRow="rowLabels">
+        <div v-for="rowLabel in rowLabels" :key="rowLabel">
+          <span>{{ rowLabel }}</span>
+        </div>
+        <!-- <div class="form-group" v-for="newRowLabel in rowLabels" :key="newRowLabel">
         <SLabel :for="{newRowLabel}">{{ newRowLabel }}</SLabel>
         <SInput :id="{newRowLabel}" />
-      </div>-->
-      <div>
-        <button type="submit">Submit</button>
+        </div>-->
+        <div>
+          <button type="submit">Submit</button>
+        </div>
       </div>
     </form>
     <ag-grid-vue
@@ -23,7 +24,7 @@
       :rowData="onLoadRows"
       rowSelection="multiple"
     >
-      <slot :name="ourItems"></slot>
+      <!-- <div v-slot:outItems="ourItems"></div> -->
     </ag-grid-vue>
   </div>
 </template>
@@ -80,62 +81,60 @@ export default {
   data() {
     return {
       gridOptions: null,
-      columnDefs: [],
-      rowData: [],
+      columnDefs: null,
+      rowData: null,
       rowCount: null,
-      showGrid: false,
       sideBar: false,
       showForm: false,
-      // [columnDefs.map(({ label }) => Object.values(label).join(""))]: String
-      newRowLabels: [],
+      rowLabels: null,
       searchTerm: "",
-      formProps: {}
+      formProps: []
     };
   },
   computed: {
-    onShowForm() {
-      this.showForm = !this.showForm;
-    },
     onLoadAlign() {
       return this.gridAlign;
     },
     onLoadColumns() {
       return this.$set(
-        this.columnDefs,
-        0,
+        this,
+        "columnDefs",
         loadColumnsBaseOnProps(this.definedCols)
       );
     },
     onLoadRows() {
       return this.$set(
-        this.rowData,
-        0,
+        this,
+        "rowData",
         loadRowsBaseOnProps(this.definedCols, this.definedrows, this.rowData)
       );
     },
+    //////////////////////////////////////////
     onLoadOneRow() {
-      this.$set(
-        this.newRowLabels,
-        0,
-        loadOneRowBaseOnProps(this.definedCols, this.newRowLabels)
+      return this.$set(
+        this,
+        "rowLabels",
+        loadOneRowBaseOnProps(this.definedCols)
       );
-    },
-    onLoadRowForForm() {
-      return [Object.getOwnPropertyNames(this.newRowLabels[0])];
     }
   },
   watch: {
     columnDefs: "onLoadColumns",
-    rowData: "onLoadRows"
+    rowData: "onLoadRows",
+    rowLabels: "onLoadOneRow"
   },
   methods: {
-    onCreateRow() {
-      this.$emit(
-        "onCreateRow",
-        this.$set(this.definedrows, this.rowData.length, this.newRowLabels)
-      );
-      // this.showForm = false;
-      // this.formProps = {};
+    onShowForm() {
+      this.showForm = !this.showForm;
+    },
+    onCreateRow(formProps) {
+      this.rowData.push({
+        // bring form props in it;
+        // id: this.nextTodoId++,
+        // title: this.newTodoText
+      });
+      this.$emit("onCreateRow", this.formProps);
+      this.formProps = [];
     },
     onSearchItem() {
       this.$emit("onSearchItem", this.searchTerm);

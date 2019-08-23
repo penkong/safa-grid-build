@@ -26,12 +26,12 @@ export default {
     return {
       definedCols: Sh_ManagerConfirm_List,
       definedrows: Sh_ManagerConfirm_Row,
-      ourItems: null,
+      ourItems: [],
       gridAlign: "righted"
     };
   },
   methods: {
-    createRow(newRow) {
+    createRow(formProps) {
       console.log("created row");
     },
     editItem(formProps) {

@@ -1,15 +1,9 @@
-export function loadOneRow(colProps, target) {
+export function loadOneRowBaseOnProps(colProps) {
   let arr = [];
-  let rv = {};
   for (let item of colProps) {
-    arr.push(item.field);
+    arr.push(item.label);
   }
-  // arr = ["EumManagerConfirmLicence", "UserName", "ConfirmationDate", "ConfirmationTime", "CI_ResourceManagerConfirm", "CI_ResourceManagerConfirmDetails", "Comments"]
-  for (let i of arr) {
-    rv[i] = "";
-  }
-  // rv = {EumManagerConfirmLicence: "", UserName: "", ConfirmationDate: "", ConfirmationTime: "", CI_ResourceManagerConfirm: "", …}
-  return (target = rv);
+  return arr;
 }
 
 // it give us an array. of header names.

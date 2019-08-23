@@ -5,10 +5,11 @@
     <button v-if="!showForm" @click.prevent="showForm=true">CREATE ITEM</button>
     <!-- <button :disabled="showGrid" >Create Grid</button> -->
     <form v-if="showForm" @submit.prevent="onCreateRow" style="margin-top: 20px;">
-      <div class="form-group" v-for="newRowLabel in newRowLabels" :key="newRowLabel">
-        <Label :for="{newRowLabel}">{{ newRowLabel }}</Label>
-        <Input :id="{newRowLabel}" />
-      </div>
+      <div v-for="(value, name) in newRowLabels" :key="name">{{ name }} : {{ value }}</div>
+      <!-- <div class="form-group" v-for="newRowLabel in newRowLabels" :key="newRowLabel">
+        <SLabel :for="{newRowLabel}">{{ newRowLabel }}</SLabel>
+        <SInput :id="{newRowLabel}" />
+      </div>-->
       <div>
         <button type="submit">Submit</button>
       </div>
@@ -28,16 +29,16 @@
 <script>
 //$ npm install --save ag-grid-community ag-grid-vue vue-property-decorator
 import { AgGridVue } from "ag-grid-vue";
-import Input from "./Input/Input";
-import Label from "./Label/Label";
-import { loadColumn } from "../helpers/loadColumn";
+import SInput from "./Input/SInput";
+import SLabel from "./Label/SLabel";
+import { loadColumnsBaseOnProps } from "../helpers/loadColumnsBaseOnProps";
 import { loadRowsBaseOnProps } from "../helpers/loadRowsBaseOnProps";
 import { loadOneRow } from "../helpers/loadOneRow";
 export default {
   name: "SafaGridView",
   components: {
-    Label,
-    Input,
+    SLabel,
+    SInput,
     AgGridVue
   },
   props: {
@@ -77,14 +78,14 @@ export default {
   data() {
     return {
       gridOptions: null,
-      columnDefs: null,
-      rowData: null,
+      columnDefs: [],
+      rowData: [],
       rowCount: null,
       showGrid: false,
       sideBar: false,
       showForm: false,
       // [columnDefs.map(({ label }) => Object.values(label).join(""))]: String
-      newRowLabels: {},
+      newRowLabels: null,
       searchTerm: "",
       formProps: {}
     };
@@ -97,16 +98,20 @@ export default {
       return this.gridAlign;
     },
     onLoadColumns() {
-      return loadColumn(this.definedCols, this.columnDefs);
+      let columns = loadColumnsBaseOnProps(this.definedCols, this.columnDefs);
+      this.$set(this.columnDefs, 0, columns);
+      return columns;
     },
     onLoadRows() {
-      return loadRowsBaseOnProps(
+      let rows = loadRowsBaseOnProps(
         this.definedCols,
         this.definedrows,
         this.rowData
       );
+      this.$set(this.rowData, 0, rows);
+      return rows;
     },
-    loadARowForCreateForm() {
+    onLoadOneRow() {
       return loadOneRow(this.definedCols, this.newRowLabels);
     }
   },

@@ -1,10 +1,10 @@
 <template>
-  <input type="text" v-slot="{}" />
+  <input type="text" />
 </template>
 
 <script>
 export default {
-  name: "Input",
+  name: "SInput"
 };
 </script>
 

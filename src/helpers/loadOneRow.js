@@ -8,9 +8,9 @@ export function loadOneRow(colProps, target) {
   for (let i of arr) {
     rv[i] = "";
   }
-  return(target = rv)
+  // rv = {EumManagerConfirmLicence: "", UserName: "", ConfirmationDate: "", ConfirmationTime: "", CI_ResourceManagerConfirm: "", …}
+  return (target = rv);
 }
-
 
 // it give us an array. of header names.
 // let newRowFromColumns = this.definedCols.map(({

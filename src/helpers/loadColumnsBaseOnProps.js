@@ -1,4 +1,4 @@
-export function loadColumnsBaseOnProps(colProps, target) {
+export function loadColumnsBaseOnProps(colProps) {
   let arr = [];
   // let colProps = this.definedCols;
   for (let i = 0; i < colProps.length; i++) {
@@ -9,5 +9,5 @@ export function loadColumnsBaseOnProps(colProps, target) {
       filter: true
     });
   }
-  return (target = arr);
+  return arr;
 }

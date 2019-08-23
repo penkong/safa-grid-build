@@ -5,7 +5,9 @@
     <button v-if="!showForm" @click.prevent="showForm=true">CREATE ITEM</button>
     <!-- <button :disabled="showGrid" >Create Grid</button> -->
     <form v-if="showForm" @submit.prevent="onCreateRow" style="margin-top: 20px;">
-      <div v-for="(value, name) in newRowLabels" :key="name">{{ name }} : {{ value }}</div>
+      <div v-for="rowLabel in onLoadRowForForm" :key="rowLabel">
+        <span>{{ rowLabel }}</span>
+      </div>
       <!-- <div class="form-group" v-for="newRowLabel in newRowLabels" :key="newRowLabel">
         <SLabel :for="{newRowLabel}">{{ newRowLabel }}</SLabel>
         <SInput :id="{newRowLabel}" />
@@ -33,7 +35,7 @@ import SInput from "./Input/SInput";
 import SLabel from "./Label/SLabel";
 import { loadColumnsBaseOnProps } from "../helpers/loadColumnsBaseOnProps";
 import { loadRowsBaseOnProps } from "../helpers/loadRowsBaseOnProps";
-import { loadOneRow } from "../helpers/loadOneRow";
+import { loadOneRowBaseOnProps } from "../helpers/loadOneRowBaseOnProps";
 export default {
   name: "SafaGridView",
   components: {
@@ -85,7 +87,7 @@ export default {
       sideBar: false,
       showForm: false,
       // [columnDefs.map(({ label }) => Object.values(label).join(""))]: String
-      newRowLabels: null,
+      newRowLabels: [],
       searchTerm: "",
       formProps: {}
     };
@@ -98,22 +100,33 @@ export default {
       return this.gridAlign;
     },
     onLoadColumns() {
-      let columns = loadColumnsBaseOnProps(this.definedCols, this.columnDefs);
-      this.$set(this.columnDefs, 0, columns);
-      return columns;
+      return this.$set(
+        this.columnDefs,
+        0,
+        loadColumnsBaseOnProps(this.definedCols)
+      );
     },
     onLoadRows() {
-      let rows = loadRowsBaseOnProps(
-        this.definedCols,
-        this.definedrows,
-        this.rowData
+      return this.$set(
+        this.rowData,
+        0,
+        loadRowsBaseOnProps(this.definedCols, this.definedrows, this.rowData)
       );
-      this.$set(this.rowData, 0, rows);
-      return rows;
     },
     onLoadOneRow() {
-      return loadOneRow(this.definedCols, this.newRowLabels);
+      this.$set(
+        this.newRowLabels,
+        0,
+        loadOneRowBaseOnProps(this.definedCols, this.newRowLabels)
+      );
+    },
+    onLoadRowForForm() {
+      return [Object.getOwnPropertyNames(this.newRowLabels[0])];
     }
+  },
+  watch: {
+    columnDefs: "onLoadColumns",
+    rowData: "onLoadRows"
   },
   methods: {
     onCreateRow() {

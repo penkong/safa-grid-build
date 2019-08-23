@@ -1,10 +1,22 @@
 <template>
-  <div></div>
+  <label :for="rowLabel">
+    <slot>{{rowLabel}}</slot>
+  </label>
 </template>
 
 <script>
 export default {
-  name: "SLabel"
+  name: "SLabel",
+  props: {
+    rowLabel: {
+      type: String,
+      default: "",
+      required: true,
+      validator: function() {
+        return;
+      }
+    }
+  }
 };
 </script>
 

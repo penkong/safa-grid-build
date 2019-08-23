@@ -1,24 +1,21 @@
 <template>
   <div :class="onLoadAlign">
-    <button @click.prevent="onSearchItem">SEARCH ITEM</button>
-    <button @click.prevent="onEditItem">EDIT ITEM</button>
-    <!-- <button v-if="!showForm" @click.prevent="onShowForm">{{ showForm }}</button>-->
-    <form @submit.prevent="onCreateRow" style="margin-top: 20px;">
-      <div :oneRow="rowLabels">
-        <div v-for="rowLabel in rowLabels" :key="rowLabel">
-          <span>{{ rowLabel }}</span>
+    <div class="form">
+      <button @click.prevent="onSearchItem">SEARCH ITEM</button>
+      <button @click.prevent="onEditItem">EDIT ITEM</button>
+      <button v-if="!showForm" @click.prevent="onShowForm">CREATE NEW</button>
+      <form v-if="showForm" @submit.prevent="onCreateRow" style="margin-top: 20px;">
+        <div class="form-group" v-for="rowLabel in rowLabels" :key="rowLabel">
+          <SInput />
+          <SLabel :rowLabel="rowLabel"></SLabel>
         </div>
-        <!-- <div class="form-group" v-for="newRowLabel in rowLabels" :key="newRowLabel">
-        <SLabel :for="{newRowLabel}">{{ newRowLabel }}</SLabel>
-        <SInput :id="{newRowLabel}" />
-        </div>-->
         <div>
           <button type="submit">Submit</button>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
     <ag-grid-vue
-      style="width: 90%; height: 90vh;"
+      style="width: 100%; height: 90vh;"
       class="ag-theme-material"
       :columnDefs="onLoadColumns"
       :rowData="onLoadRows"
@@ -135,6 +132,7 @@ export default {
       });
       this.$emit("onCreateRow", this.formProps);
       this.formProps = [];
+      this.showForm = !this.showForm;
     },
     onSearchItem() {
       this.$emit("onSearchItem", this.searchTerm);
@@ -151,29 +149,64 @@ export default {
 @import "../../node_modules/ag-grid-community/src/styles/ag-grid.scss";
 @import "../../node_modules/ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material.scss";
 div {
-  button {
-    display: block;
-    width: 30%;
-    height: 40px;
-    border-radius: 10px;
-    background-color: rgb(204, 133, 27);
-  }
-  form {
+  div > .form {
+    margin: 1rem auto;
+    padding: 0.5rem;
     button {
+      cursor: pointer;
+      color: white;
+      font-size: 1.1rem;
+      letter-spacing: 3px;
+      margin: 0 auto;
+      margin-top: 1rem;
+      text-align: center;
       display: block;
-      width: 30%;
+      width: 20%;
       height: 40px;
       border-radius: 10px;
-      background-color: rgb(133, 80, 0);
+      background-color: rgb(2, 173, 159);
+      border: none;
+      box-shadow: 0px 6px 5px 2px rgb(0, 80, 100);
+      transition: all 0.3s ease-in;
+      &:hover {
+        transform: scaleX(1.1);
+      }
+    }
+    form {
+      background-color: #eee;
+      padding: 1rem;
+      border-radius: 5px;
+      width: 50%;
+      text-align: center;
+      margin: 0 auto;
+      .form-group {
+        margin-top: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+        input {
+          border-radius: 3px;
+          min-width: 1rem;
+          padding: 0.25rem;
+        }
+      }
+      div > button {
+        margin-top: 1rem;
+        background-color: rgb(0, 153, 255);
+        width: 40%;
+        border-radius: 3rem;
+        outline: none;
+      }
     }
   }
-}
-.righted {
-  text-align: left;
-  background-color: rgb(209, 157, 157);
-}
-.lefted {
-  text-align: left;
-  background-color: rgb(78, 78, 201);
+  .righted {
+    text-align: left;
+    background-color: rgb(21, 56, 95);
+  }
+  .lefted {
+    text-align: left;
+    background-color: rgb(78, 78, 201);
+  }
 }
 </style>

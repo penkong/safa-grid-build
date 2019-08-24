@@ -24,17 +24,11 @@ export default {
 };
 </script>
 <style lang="scss">
-html {
+*,
+*::after,
+*::before {
   margin: 0;
   padding: 0;
-}
-body {
-  margin: 0;
-  padding: 0;
-}
-
-.app {
-  padding: 0;
-  margin: 0;
+  box-sizing: border-box;
 }
 </style>

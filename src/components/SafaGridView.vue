@@ -52,26 +52,26 @@ export default {
     definedCols: {
       type: Array,
       required: true,
-      defualt: [],
-      validator: function() {
-        return;
-      }
+      defualt: []
+      // validator: function() {
+      //   return;
+      // }
     },
     definedrows: {
       type: Array,
       required: true,
-      defualt: [],
-      validator: function() {
-        return;
-      }
+      defualt: []
+      // validator: function() {
+      //   return;
+      // }
     },
     ourItems: {
       type: Array,
       required: true,
-      defualt: [],
-      validator: function() {
-        return;
-      }
+      defualt: []
+      // validator: function() {
+      //   return;
+      // }
     },
     gridAlign: {
       type: String,
@@ -120,11 +120,6 @@ export default {
         loadOneRowBaseOnProps(this.definedCols)
       );
     }
-  },
-  created() {
-    onLoadColumns();
-    onLoadRows();
-    onLoadOneRow();
   },
   watch: {
     columnDefs: "onLoadColumns",

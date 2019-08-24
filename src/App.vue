@@ -1,13 +1,6 @@
 <template>
   <div class="app">
-    <SafaGridView
-      :definedCols="definedCols"
-      :definedrows="definedrows"
-      :gridAlign="gridAlign"
-      @onCreateRow="createRow"
-      @onSearchItem="searchItem"
-      @onEditItem="editItem"
-    />
+    <SafaGridView :definedCols="definedCols" :definedrows="definedrows" :gridAlign="gridAlign" />
   </div>
 </template>
 

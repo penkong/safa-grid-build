@@ -15,7 +15,22 @@
   </div>
 </template>
 
-
+<!-- <button v-on:click="saveState()">Save State</button> -->
+          <!-- :sideBar="sideBar"
+      :statusBar="statusBar"-->
+      <!-- :defaultColDef="defaultColDef" -->
+      <!-- :columnDefs="columnDefs"
+      :rowData="rowData"-->
+      <!-- <div v-slot:outItems="ourItems"></div>
+          //       rowDrag: true,
+          // enableRowGroup: true,
+          // enablePivot: true,
+          // enableValue: true,
+             columnTypes: {
+          // can add type: ['nonEditableColumn'], in loadColumn funcs;
+          // nonEditableColumn: { editable: false },
+        },
+           -->
 <style lang="scss" scoped>
 div > .form {
   margin: 1rem auto;

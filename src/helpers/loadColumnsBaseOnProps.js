@@ -5,7 +5,8 @@ export function loadColumnsBaseOnProps(colProps) {
         arr.push({
             headerName: colProps[i].label,
             field: colProps[i].field,
-            width: colProps[i].width
+            width: colProps[i].width,
+            type: "numericColumn",
         });
     }
     return arr;

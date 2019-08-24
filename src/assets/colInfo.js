@@ -6,7 +6,7 @@ export const Sh_ManagerConfirm_List = [{
         align: "right",
         field: "EumManagerConfirmLicence",
         sortable: true,
-
+        width: 100,
     },
     {
         name: "UserName",
@@ -15,7 +15,7 @@ export const Sh_ManagerConfirm_List = [{
         align: "right",
         field: "UserName",
         sortable: true,
-
+        width: 100,
     },
     {
         name: "ConfirmationDate",
@@ -24,7 +24,7 @@ export const Sh_ManagerConfirm_List = [{
         align: "right",
         field: "ConfirmationDate",
         sortable: true,
-
+        width: 100,
     },
     {
         name: "ConfirmationTime",
@@ -33,7 +33,7 @@ export const Sh_ManagerConfirm_List = [{
         align: "right",
         field: "ConfirmationTime",
         sortable: true,
-
+        width: 100,
     },
     {
         name: "CI_ResourceManagerConfirm",
@@ -42,7 +42,7 @@ export const Sh_ManagerConfirm_List = [{
         align: "right",
         field: "CI_ResourceManagerConfirm",
         sortable: true,
-
+        width: 100,
     },
     {
         name: "CI_ResourceManagerConfirmDetails",
@@ -51,7 +51,7 @@ export const Sh_ManagerConfirm_List = [{
         align: "right",
         field: "CI_ResourceManagerConfirmDetails",
         sortable: true,
-
+        width: 100,
     },
     {
         name: "Comments",
@@ -60,6 +60,6 @@ export const Sh_ManagerConfirm_List = [{
         align: "right",
         field: "Comments",
         sortable: true,
-
+        width: 100,
     }
 ];

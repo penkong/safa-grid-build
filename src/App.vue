@@ -3,7 +3,6 @@
     <SafaGridView
       :definedCols="definedCols"
       :definedrows="definedrows"
-      :ourItems="ourItems"
       :gridAlign="gridAlign"
       @onCreateRow="createRow"
       @onSearchItem="searchItem"
@@ -26,20 +25,8 @@ export default {
     return {
       definedCols: Sh_ManagerConfirm_List,
       definedrows: Sh_ManagerConfirm_Row,
-      ourItems: [],
       gridAlign: "righted"
     };
-  },
-  methods: {
-    createRow(formProps) {
-      console.log("created row");
-    },
-    editItem(formProps) {
-      console.log("edit Item");
-    },
-    searchItem(formProps) {
-      console.log("search item");
-    }
   }
 };
 </script>
@@ -54,7 +41,7 @@ body {
 }
 
 .app {
-  padding: 20px;
-  margin: 0 20px;
+  padding: 0;
+  margin: 0;
 }
 </style>

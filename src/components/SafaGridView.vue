@@ -1,15 +1,21 @@
 <template>
-  <div :class="onLoadAlign">
+  <div class="safa-grid" :class="onLoadAlign">
+    <!-- <button v-on:click="saveState()">Save State</button> -->
     <ag-grid-vue
-      style="width: 100%; height: 90vh;"
+      style="width: 100%; height: 100vh;"
       class="ag-theme-material"
-      :gridOptions="gridOptions"
-      :defaultColDef="defaultColDef"
-      :columnDefs="columnDefs"
-      :rowData="rowData"
-      :rowAnimation="true"
       rowSelection="multiple"
+      :gridOptions="gridOptions"
+      :rowAnimation="true"
+      :animateRows="true"
+      :enableRangeSelection="true"
+      @grid-ready="onGridReady"
     >
+      <!-- :sideBar="sideBar"
+      :statusBar="statusBar"-->
+      <!-- :defaultColDef="defaultColDef" -->
+      <!-- :columnDefs="columnDefs"
+      :rowData="rowData"-->
       <!-- <div v-slot:outItems="ourItems"></div> -->
     </ag-grid-vue>
   </div>
@@ -44,14 +50,6 @@ export default {
       //   return;
       // }
     },
-    ourItems: {
-      type: Array,
-      required: true,
-      defualt: []
-      // validator: function() {
-      //   return;
-      // }
-    },
     gridAlign: {
       type: String,
       required: true,
@@ -63,25 +61,43 @@ export default {
   },
   data() {
     return {
-      gridOptions: {},
-      defaultColDef: {
-        // rowDrag: true
-        sortable: true,
-        resizable: true,
-        filter: true,
-        sort: "asc",
-        cellStyle: {
-          "background-color": "#fafaf7",
-          "border-top": "1px solid #826313",
-          "border-radius": "4px",
-          "margin-top": "5px"
-        }
+      gridOptions: {
+        defaultColDef: {
+          // rowDrag: true,
+          // enableRowGroup: true,
+          // enablePivot: true,
+          // enableValue: true,
+          sortable: true,
+          resizable: true,
+          filter: true,
+          sort: "asc",
+
+          cellStyle: {
+            "background-color": "#fafaf7",
+            "border-top": "1px solid #826313",
+            "border-radius": "4px",
+            "margin-top": "5px",
+            "border-bottm": "none"
+          },
+          editable: true,
+          rowCount: null,
+          sideBar: false,
+          showForm: false,
+          gridApi: null,
+          columnApi: null
+        },
+        statusBar: {
+          statusPanels: []
+        },
+        enableCellChangeFlash: true,
+        defaultColGroupDef: {},
+        columnTypes: {
+          // can add type: ['nonEditableColumn'], in loadColumn funcs;
+          // nonEditableColumn: { editable: false },
+        },
+        columnDefs: null,
+        rowData: null
       },
-      columnDefs: null,
-      rowData: null,
-      rowCount: null,
-      sideBar: false,
-      showForm: false,
       searchTerm: "",
       formProps: []
     };
@@ -92,13 +108,13 @@ export default {
     },
     onLoadColumns() {
       return this.$set(
-        this,
+        this.gridOptions,
         "columnDefs",
         loadColumnsBaseOnProps(this.definedCols)
       );
     },
     onLoadRows() {
-      return this.$set(this, "rowData", this.definedrows);
+      return this.$set(this.gridOptions, "rowData", this.definedrows);
     }
   },
   watch: {
@@ -107,9 +123,18 @@ export default {
     // rowLabels: "onLoadOneRow"
   },
   methods: {
-    onShowForm() {
-      this.showForm = !this.showForm;
+    // onShowForm() {
+    //   this.showForm = !this.showForm;
+    // },
+    onGridReady(params) {
+      params.api.sizeColumnsToFit(3);
     }
+    // saveState() {
+    //   window.colState = this.gridColumnApi.getColumnState();
+    //   window.groupState = this.gridColumnApi.getColumnGroupState();
+    //   window.sortState = this.gridApi.getSortModel();
+    //   window.filterState = this.gridApi.getFilterModel();
+    // }
     // onCreateRow(formProps) {
     //   this.rowData.push({
     //     // bring form props in it;
@@ -126,6 +151,10 @@ export default {
     // onEditItem() {
     //   this.$emit("onEditItem", this.formProps);
     // }
+  },
+  mounted() {
+    this.gridApi = this.gridOptions.api;
+    this.gridColumnApi = this.gridOptions.columnApi;
   }
 };
 </script>
@@ -134,15 +163,19 @@ export default {
 <style lang="scss">
 @import "../../node_modules/ag-grid-community/src/styles/ag-grid.scss";
 @import "../../node_modules/ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material.scss";
+.safa-grid {
+  padding: 0;
+  margin: 0;
+  // min-width: 100%;
+  // min-height: 100%;
+}
 
-div {
-  .righted {
-    text-align: left;
-    background-color: rgb(21, 56, 95);
-  }
-  .lefted {
-    text-align: left;
-    background-color: rgb(78, 78, 201);
-  }
+.righted {
+  text-align: left;
+  background-color: rgb(21, 56, 95);
+}
+.lefted {
+  text-align: left;
+  background-color: rgb(78, 78, 201);
 }
 </style>

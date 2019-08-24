@@ -1,23 +1,10 @@
 <template>
   <div :class="onLoadAlign">
-    <div class="form">
-      <button @click.prevent="onSearchItem">SEARCH ITEM</button>
-      <button @click.prevent="onEditItem">EDIT ITEM</button>
-      <button v-if="!showForm" @click.prevent="onShowForm">CREATE NEW</button>
-      <form v-if="showForm" @submit.prevent="onCreateRow" style="margin-top: 20px;">
-        <div class="form-group" v-for="rowLabel in rowLabels" :key="rowLabel">
-          <SInput />
-          <SLabel :rowLabel="rowLabel"></SLabel>
-        </div>
-        <div>
-          <button type="submit">Submit</button>
-        </div>
-      </form>
-    </div>
     <ag-grid-vue
       style="width: 100%; height: 90vh;"
       class="ag-theme-material"
       :gridOptions="gridOptions"
+      :defaultColDef="defaultColDef"
       :columnDefs="columnDefs"
       :rowData="rowData"
       :rowAnimation="true"
@@ -85,6 +72,20 @@ export default {
   data() {
     return {
       gridOptions: {},
+      defaultColDef: {
+        sortable: true,
+        resizable: true,
+        filter: true,
+        resizable: true,
+        pinned: "right",
+        sort: "asc",
+        rowDrag: true,
+        cellStyle: {
+          "background-color": "	#f2fbff",
+          "border-top": "1px solid #5d84a9",
+          "border-radius": "1px"
+        }
+      },
       columnDefs: null,
       rowData: null,
       rowCount: null,
@@ -151,61 +152,10 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../../node_modules/ag-grid-community/src/styles/ag-grid.scss";
 @import "../../node_modules/ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material.scss";
 div {
-  div > .form {
-    margin: 1rem auto;
-    padding: 0.5rem;
-    button {
-      cursor: pointer;
-      color: white;
-      font-size: 1.1rem;
-      letter-spacing: 3px;
-      margin: 0 auto;
-      margin-top: 1rem;
-      text-align: center;
-      display: block;
-      width: 20%;
-      height: 40px;
-      border-radius: 10px;
-      background-color: rgb(2, 173, 159);
-      border: none;
-      box-shadow: 0px 6px 5px 2px rgb(0, 80, 100);
-      transition: all 0.3s ease-in;
-      &:hover {
-        transform: scaleX(1.1);
-      }
-    }
-    form {
-      background-color: #eee;
-      padding: 1rem;
-      border-radius: 5px;
-      width: 50%;
-      text-align: center;
-      margin: 0 auto;
-      .form-group {
-        margin-top: 0.5rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-weight: bold;
-        input {
-          border-radius: 3px;
-          min-width: 1rem;
-          padding: 0.25rem;
-        }
-      }
-      div > button {
-        margin-top: 1rem;
-        background-color: rgb(0, 153, 255);
-        width: 40%;
-        border-radius: 3rem;
-        outline: none;
-      }
-    }
-  }
   .righted {
     text-align: left;
     background-color: rgb(21, 56, 95);

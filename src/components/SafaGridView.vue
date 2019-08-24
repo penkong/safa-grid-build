@@ -17,8 +17,10 @@
     <ag-grid-vue
       style="width: 100%; height: 90vh;"
       class="ag-theme-material"
-      :columnDefs="onLoadColumns"
-      :rowData="onLoadRows"
+      :gridOptions="gridOptions"
+      :columnDefs="columnDefs"
+      :rowData="rowData"
+      :rowAnimation="true"
       rowSelection="multiple"
     >
       <!-- <div v-slot:outItems="ourItems"></div> -->
@@ -29,11 +31,16 @@
 <script>
 //$ npm install --save ag-grid-community ag-grid-vue vue-property-decorator
 import { AgGridVue } from "ag-grid-vue";
+
+// components created by developers
 import SInput from "./Input/SInput";
 import SLabel from "./Label/SLabel";
+
+// helper functions help us to maintain clean code.
 import { loadColumnsBaseOnProps } from "../helpers/loadColumnsBaseOnProps";
 import { loadRowsBaseOnProps } from "../helpers/loadRowsBaseOnProps";
 import { loadOneRowBaseOnProps } from "../helpers/loadOneRowBaseOnProps";
+
 export default {
   name: "SafaGridView",
   components: {
@@ -77,7 +84,7 @@ export default {
   },
   data() {
     return {
-      gridOptions: null,
+      gridOptions: {},
       columnDefs: null,
       rowData: null,
       rowCount: null,
@@ -106,7 +113,6 @@ export default {
         loadRowsBaseOnProps(this.definedCols, this.definedrows, this.rowData)
       );
     },
-    //////////////////////////////////////////
     onLoadOneRow() {
       return this.$set(
         this,
@@ -114,6 +120,11 @@ export default {
         loadOneRowBaseOnProps(this.definedCols)
       );
     }
+  },
+  created() {
+    onLoadColumns();
+    onLoadRows();
+    onLoadOneRow();
   },
   watch: {
     columnDefs: "onLoadColumns",

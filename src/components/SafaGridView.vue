@@ -19,20 +19,12 @@
 //$ npm install --save ag-grid-community ag-grid-vue vue-property-decorator
 import { AgGridVue } from "ag-grid-vue";
 
-// components created by developers
-import SInput from "./Input/SInput";
-import SLabel from "./Label/SLabel";
-
 // helper functions help us to maintain clean code.
 import { loadColumnsBaseOnProps } from "../helpers/loadColumnsBaseOnProps";
-import { loadRowsBaseOnProps } from "../helpers/loadRowsBaseOnProps";
-import { loadOneRowBaseOnProps } from "../helpers/loadOneRowBaseOnProps";
 
 export default {
   name: "SafaGridView",
   components: {
-    SLabel,
-    SInput,
     AgGridVue
   },
   props: {
@@ -79,7 +71,7 @@ export default {
         resizable: true,
         pinned: "right",
         sort: "asc",
-        rowDrag: true,
+        // rowDrag: true,
         cellStyle: {
           "background-color": "	#f2fbff",
           "border-top": "1px solid #5d84a9",
@@ -91,7 +83,6 @@ export default {
       rowCount: null,
       sideBar: false,
       showForm: false,
-      rowLabels: null,
       searchTerm: "",
       formProps: []
     };
@@ -108,53 +99,43 @@ export default {
       );
     },
     onLoadRows() {
-      return this.$set(
-        this,
-        "rowData",
-        loadRowsBaseOnProps(this.definedCols, this.definedrows, this.rowData)
-      );
-    },
-    onLoadOneRow() {
-      return this.$set(
-        this,
-        "rowLabels",
-        loadOneRowBaseOnProps(this.definedCols)
-      );
+      return this.$set(this, "rowData", this.definedrows);
     }
   },
   watch: {
     columnDefs: "onLoadColumns",
-    rowData: "onLoadRows",
-    rowLabels: "onLoadOneRow"
+    rowData: "onLoadRows"
+    // rowLabels: "onLoadOneRow"
   },
   methods: {
     onShowForm() {
       this.showForm = !this.showForm;
-    },
-    onCreateRow(formProps) {
-      this.rowData.push({
-        // bring form props in it;
-        // id: this.nextTodoId++,
-        // title: this.newTodoText
-      });
-      this.$emit("onCreateRow", this.formProps);
-      this.formProps = [];
-      this.showForm = !this.showForm;
-    },
-    onSearchItem() {
-      this.$emit("onSearchItem", this.searchTerm);
-    },
-    onEditItem() {
-      this.$emit("onEditItem", this.formProps);
     }
+    // onCreateRow(formProps) {
+    //   this.rowData.push({
+    //     // bring form props in it;
+    //     // id: this.nextTodoId++,
+    //     // title: this.newTodoText
+    //   });
+    //   this.$emit("onCreateRow", this.formProps);
+    //   this.formProps = [];
+    //   this.showForm = !this.showForm;
+    // },
+    // onSearchItem() {
+    //   this.$emit("onSearchItem", this.searchTerm);
+    // },
+    // onEditItem() {
+    //   this.$emit("onEditItem", this.formProps);
+    // }
   }
 };
 </script>
 
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "../../node_modules/ag-grid-community/src/styles/ag-grid.scss";
 @import "../../node_modules/ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material.scss";
+
 div {
   .righted {
     text-align: left;

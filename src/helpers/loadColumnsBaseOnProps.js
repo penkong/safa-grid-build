@@ -5,6 +5,7 @@ export function loadColumnsBaseOnProps(colProps) {
         arr.push({
             headerName: colProps[i].label,
             field: colProps[i].field,
+            width: colProps[i].width
         });
     }
     return arr;

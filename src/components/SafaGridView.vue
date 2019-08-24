@@ -65,17 +65,16 @@ export default {
     return {
       gridOptions: {},
       defaultColDef: {
+        // rowDrag: true
         sortable: true,
         resizable: true,
         filter: true,
-        resizable: true,
-        pinned: "right",
         sort: "asc",
-        // rowDrag: true,
         cellStyle: {
-          "background-color": "	#f2fbff",
-          "border-top": "1px solid #5d84a9",
-          "border-radius": "1px"
+          "background-color": "#fafaf7",
+          "border-top": "1px solid #826313",
+          "border-radius": "4px",
+          "margin-top": "5px"
         }
       },
       columnDefs: null,

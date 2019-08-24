@@ -5,7 +5,8 @@ export const Sh_ManagerConfirm_List = [{
         label: "نوع مجوز تأیید مدیران",
         align: "right",
         field: "EumManagerConfirmLicence",
-        sortable: true
+        sortable: true,
+
     },
     {
         name: "UserName",
@@ -13,7 +14,8 @@ export const Sh_ManagerConfirm_List = [{
         label: "کاربر",
         align: "right",
         field: "UserName",
-        sortable: true
+        sortable: true,
+
     },
     {
         name: "ConfirmationDate",
@@ -21,7 +23,8 @@ export const Sh_ManagerConfirm_List = [{
         label: "تاریخ",
         align: "right",
         field: "ConfirmationDate",
-        sortable: true
+        sortable: true,
+
     },
     {
         name: "ConfirmationTime",
@@ -29,7 +32,8 @@ export const Sh_ManagerConfirm_List = [{
         label: "ساعت",
         align: "right",
         field: "ConfirmationTime",
-        sortable: true
+        sortable: true,
+
     },
     {
         name: "CI_ResourceManagerConfirm",
@@ -37,7 +41,8 @@ export const Sh_ManagerConfirm_List = [{
         label: "منبع تأیید ",
         align: "right",
         field: "CI_ResourceManagerConfirm",
-        sortable: true
+        sortable: true,
+
     },
     {
         name: "CI_ResourceManagerConfirmDetails",
@@ -45,7 +50,8 @@ export const Sh_ManagerConfirm_List = [{
         label: "جزئیات منبع تأیید  ",
         align: "right",
         field: "CI_ResourceManagerConfirmDetails",
-        sortable: true
+        sortable: true,
+
     },
     {
         name: "Comments",
@@ -53,6 +59,7 @@ export const Sh_ManagerConfirm_List = [{
         label: "توضیحات",
         align: "right",
         field: "Comments",
-        sortable: true
+        sortable: true,
+
     }
 ];

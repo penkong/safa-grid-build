@@ -3,6 +3,7 @@ export function loadColumnsBaseOnProps(colProps) {
     // let colProps = this.definedCols;
     for (let i = 0; i < colProps.length; i++) {
         arr.push({
+            colId: i,
             headerName: colProps[i].label,
             field: colProps[i].field,
             width: colProps[i].width,

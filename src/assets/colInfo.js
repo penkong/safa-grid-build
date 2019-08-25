@@ -7,6 +7,7 @@ export const Sh_ManagerConfirm_List = [{
         field: "EumManagerConfirmLicence",
         sortable: true,
         minWidth: 100,
+
     },
     {
         name: "UserName",

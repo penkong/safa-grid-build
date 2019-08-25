@@ -1,17 +1,26 @@
 <template>
   <div class="safa-grid" :class="onLoadAlign" style="height: 100vh;">
     <div class="button-row" style="margin-bottom: 5px;">
-      <button v-on:click="setDataValue()">Create</button>
-      <button v-on:click="setData()">Set</button>
-      <button v-on:click="updateRowData()">Update</button>
+      <button @click="addItem()">Add Item</button>
+      <button @click="onAddRow()">افزودن</button>
+      <button @click="onInsertRowAt2()">Insert Row @ 2</button>
+      <button @click="updateItems()">Update First 5</button>
+      <button @click="onRemoveSelected()">حذف ردیف</button>
+      <button @click="getRowData()">Get Row Data</button>
+      <button @click="clearData()">Clear Data</button>
+      <button @click="addItemsAtIndex()">Add Items @ 2</button>
     </div>
     <ag-grid-vue
       class="ag-theme-balham"
-      style=" height: 100%;"
+      style=" height: calc(100% - 58px);"
       rowSelection="multiple"
+      deltaRowDataMode="true"
       :gridOptions="gridOptions"
+      :columnDefs="columnDefs"
+      :rowData="rowData"
       :rowAnimation="true"
       :rowClassRules="rowClassRules"
+      :getRowNodeId="getRowNodeId"
       @grid-ready="onGridReady"
     ></ag-grid-vue>
   </div>
@@ -65,6 +74,7 @@ export default {
         },
         gridApi: null,
         columnApi: null,
+
         // statusBar: {
         //   statusPanels: []
         // },
@@ -72,9 +82,10 @@ export default {
         enableCellChangeFlash: true,
         defaultColGroupDef: {},
         columnTypes: {},
-        columnDefs: null,
-        rowData: null
-      }
+        getRowNodeId: null
+      },
+      columnDefs: null,
+      rowData: null
     };
   },
   beforeMount() {
@@ -90,13 +101,13 @@ export default {
     },
     onLoadColumns() {
       return this.$set(
-        this.gridOptions,
+        this,
         "columnDefs",
         loadColumnsBaseOnProps(this.definedCols)
       );
     },
     onLoadRows() {
-      return this.$set(this.gridOptions, "rowData", this.definedrows);
+      return this.$set(this, "rowData", this.definedrows);
     }
   },
   watch: {
@@ -106,6 +117,25 @@ export default {
   methods: {
     onGridReady(params) {
       params.api.sizeColumnsToFit();
+    },
+    getRowNodeId(data) {
+      return data.id;
+    },
+    updateSort() {
+      this.gridApi.refreshClientSideRowModel("sort");
+    },
+    updateFilter() {
+      this.gridApi.refreshClientSideRowModel("filter");
+    },
+    onAddRow() {
+      var newItem = createNewRowData();
+      var res = this.gridApi.updateRowData({ add: [newItem] });
+      // printResult(res);
+    },
+    addItem() {
+      var newItems = [createNewRowData()];
+      var res = this.gridApi.updateRowData({ add: newItems });
+      // printResult(res);
     },
     setDataValue() {
       this.gridApi.forEachNode(function(rowNode) {
@@ -129,10 +159,24 @@ export default {
         itemsToUpdate.push(data);
       });
       this.gridApi.updateRowData({ update: itemsToUpdate });
-    },
-    onGridReady(params) {}
+    }
   }
 };
+let newCount = 1;
+
+function createNewRowData() {
+  var newData = {
+    EumManagerConfirmLicence: "پر شود",
+    UserName: "پر شود",
+    ConfirmationDate: "00/00/99",
+    ConfirmationTime: "12:00",
+    CI_ResourceManagerConfirm: "مدیریت",
+    CI_ResourceManagerConfirmDetails: " جزمیات",
+    Comments: "خالی"
+  };
+  newCount++;
+  return newData;
+}
 </script>
 
 

@@ -1,11 +1,17 @@
 // Import vue component
+
 import SafaGridVue from './SafaGridVue.vue';
 
+const Components = {
+    SafaGridVue
+};
 // Declare install function executed by Vue.use()
 export function install(Vue, options) {
     if (install.installed) return;
     install.installed = true;
-    Vue.component('SafaGridVue', SafaGridVue);
+    Object.keys(Components).forEach(name => {
+        Vue.component(name, Components[name]);
+    });
 }
 
 // Create module definition for Vue.use()
@@ -25,7 +31,7 @@ if (GlobalVue) {
 }
 
 // To allow use as module (npm/webpack/etc.) export SafaGridVue
-export default SafaGridVue;
+export default Components;
 
 
 
@@ -37,20 +43,6 @@ export default SafaGridVue;
 //   Vue.component(name, component);
 // });
 
-import Vue from "vue";
-import FlockButton from "./Button.vue";
-import FlockBanner from "./Banner.vue";
-
-const Components = {
-    FlockButton,
-    FlockBanner
-};
-
-Object.keys(Components).forEach(name => {
-    Vue.component(name, Components[name]);
-});
-
-export default Components;
 
 // vue-cli-service build--target lib --name myLib [entry]
 

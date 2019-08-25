@@ -26,3 +26,34 @@ if (GlobalVue) {
 
 // To allow use as module (npm/webpack/etc.) export SafaGridVue
 export default SafaGridVue;
+
+
+
+// packaging-sfc-for-npm
+// import Components from '@flockos/vue-components';
+
+// // Global registration in your main.js/App.vue file
+// Object.entried(Components).forEach((name, component) => {
+//   Vue.component(name, component);
+// });
+
+import Vue from "vue";
+import FlockButton from "./Button.vue";
+import FlockBanner from "./Banner.vue";
+
+const Components = {
+    FlockButton,
+    FlockBanner
+};
+
+Object.keys(Components).forEach(name => {
+    Vue.component(name, Components[name]);
+});
+
+export default Components;
+
+// vue-cli-service build--target lib --name myLib [entry]
+
+//check picture for commands
+// npm run build - bundle
+// npm publish--access public

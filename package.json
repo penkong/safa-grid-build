@@ -1,34 +1,67 @@
 {
-  "name": "safa-grid",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "ag-grid-community": "^21.1.1",
-    "ag-grid-enterprise": "^21.1.1",
-    "ag-grid-vue": "^21.1.0",
-    "axios": "^0.19.0",
-    "core-js": "^2.6.5",
-    "samim-font": "^1.0.2",
-    "vue": "^2.6.10",
-    "vue-property-decorator": "^8.2.1"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.10.0",
-    "@vue/cli-plugin-eslint": "^3.10.0",
-    "@vue/cli-service": "^3.10.0",
-    "@vue/eslint-config-prettier": "^5.0.0",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.16.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "node-sass": "^4.9.0",
-    "prettier": "^1.18.2",
-    "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.6.10"
-  }
+    "name": "safa-grid",
+    "version": "0.1.0",
+    "description": "npm package for add reusable layer over grid for Safa company.",
+    "private": false,
+    "main": "./dist/index.es.js",
+    "author": {
+        "name": "nazemi-safa",
+        "email": "nazemi.works@gmail.com"
+    },
+    "engines": {
+        "node": ">= 7.0"
+    },
+    "scripts": {
+        "dev": "vue serve SafaGridView.vue",
+        "buildd": "vue-cli-service build --target lib --name flock ./src/_globals.js",
+        "build-wc": "vue-cli-service build --target wc --name flock 'src/components/*.vue'",
+        "build-wc-async": "vue-cli-service build --target wc-async --name flock 'src/components/*.vue'",
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "builds": "cross-env NODE_ENV=production webpack --config build/webpack.config.js",
+        "lint": "vue-cli-service lint"
+    },
+    "dependencies": {
+        "ag-grid-community": "^21.1.1",
+        "ag-grid-enterprise": "^21.1.1",
+        "ag-grid-vue": "^21.1.0",
+        "core-js": "^2.6.5",
+        "vue": "^2.6.10",
+        "vue-property-decorator": "^8.2.1"
+    },
+    "devDependencies": {
+        "@vue/cli-plugin-babel": "^3.10.0",
+        "@vue/cli-plugin-eslint": "^3.10.0",
+        "@vue/cli-service": "^3.10.0",
+        "@vue/eslint-config-prettier": "^5.0.0",
+        "babel-eslint": "^10.0.1",
+        "cross-env": "^5.2.0",
+        "eslint": "^5.16.0",
+        "eslint-plugin-prettier": "^3.1.0",
+        "eslint-plugin-vue": "^5.0.0",
+        "node-sass": "^4.9.0",
+        "prettier": "^1.18.2",
+        "sass-loader": "^7.1.0",
+        "vue-template-compiler": "^2.6.10"
+    },
+    "homepage": "https://github.com/penkong/safa-grid-build#readme",
+    "bugs": {
+        "url": "https://github.com/penkong/safa-grid-build/issues"
+    },
+    "files": [
+        "dist/*",
+        "doc",
+        "*.json",
+        "*.js"
+    ],
+    "keywords": [
+        "safa",
+        "framework",
+        "vuejs",
+        "vue",
+        "js",
+        "desktop",
+        "spa"
+    ],
+    "license": "MIT"
 }

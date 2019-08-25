@@ -5,9 +5,9 @@
       <button @click="updateAndSort()">به روز رسانی</button>
       <button @click="addRow()">افزودن ردیف</button>
       <!-- <button @click="onAddRow()">افزودن</button>
+      <button @click="getRowData()">Get Row Data</button>
       <button @click="onInsertRowAt2()">Insert Row @ 2</button>
       <button @click="updateItems()">Update First 5</button>
-      <button @click="getRowData()">Get Row Data</button>
       <button @click="clearData()">Clear Data</button>
       <button @click="addItemsAtIndex()">Add Items @ 2</button>-->
     </div>
@@ -94,6 +94,7 @@ export default {
       sideBar: false,
       showForm: false
     };
+    this.$set(this, "defaultColDef", this.gridOptions.defaultColDef);
   },
   mounted() {
     this.gridApi = this.gridOptions.api;
@@ -120,15 +121,30 @@ export default {
   },
   methods: {
     onRemoveSelected() {
-      var selectedData = this.gridApi.getSelectedRows();
-      var res = this.gridApi.updateRowData({ remove: selectedData });
+      let selectedData = this.gridApi.getSelectedRows();
+      let res = this.gridApi.updateRowData({ remove: selectedData });
     },
     updateAndSort() {
       this.gridApi.refreshClientSideRowModel("sort");
     },
+    createNewRowData() {
+      let newData = {
+        EumManagerConfirmLicence: "پر شود",
+        UserName: "پر شود",
+        ConfirmationDate: "00/00/99",
+        ConfirmationTime: "12:00",
+        CI_ResourceManagerConfirm: "مدیریت",
+        CI_ResourceManagerConfirmDetails: " جزمیات",
+        Comments: "خالی"
+      };
+      return newData;
+    },
     addRow() {
-      var newItems = [createNewRowData()];
-      var res = this.gridApi.updateRowData({ add: newItems });
+      let newItem = this.createNewRowData();
+      let res = this.gridApi.updateRowData({
+        add: [newItem],
+        addIndex: 0
+      });
     },
     onGridReady(params) {
       params.api.sizeColumnsToFit();
@@ -136,44 +152,16 @@ export default {
     updateFilter() {
       this.gridApi.refreshClientSideRowModel("filter");
     },
-    setDataValue() {
-      this.gridApi.forEachNode(function(rowNode) {
-        rowNode.setDataValue("sickDays", randomInt());
+    getRowData() {
+      var rowData = [];
+      this.gridApi.forEachNode(function(node) {
+        rowData.push(node.data);
       });
-    },
-    setData() {
-      this.gridApi.forEachNode(function(rowNode) {
-        var newData = {
-          employee: rowNode.data.employee,
-          sickDays: randomInt()
-        };
-        rowNode.setData(newData);
-      });
-    },
-    updateRowData() {
-      var itemsToUpdate = [];
-      this.gridApi.forEachNode(function(rowNode) {
-        var data = rowNode.data;
-        data.sickDays = randomInt();
-        itemsToUpdate.push(data);
-      });
-      this.gridApi.updateRowData({ update: itemsToUpdate });
+      console.log("Row Data:");
+      console.log(rowData);
     }
   }
 };
-
-function createNewRowData() {
-  var newData = {
-    EumManagerConfirmLicence: "پر شود",
-    UserName: "پر شود",
-    ConfirmationDate: "00/00/99",
-    ConfirmationTime: "12:00",
-    CI_ResourceManagerConfirm: "مدیریت",
-    CI_ResourceManagerConfirmDetails: " جزمیات",
-    Comments: "خالی"
-  };
-  return newData;
-}
 </script>
 
 

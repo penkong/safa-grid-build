@@ -14,6 +14,31 @@
     </form>
   </div>
 </template>
+<!--
+
+setDataValue() {
+      this.gridApi.forEachNode(function(rowNode) {
+        rowNode.setDataValue("sickDays", randomInt());
+      });
+    },
+    setData() {
+      this.gridApi.forEachNode(function(rowNode) {
+        let newData = {
+          employee: rowNode.data.employee,
+          sickDays: randomInt()
+        };
+        rowNode.setData(newData);
+      });
+    }
+// updateRowData() {
+//       let itemsToUpdate = [];
+//       this.gridApi.forEachNode(function(rowNode) {
+//         let data = rowNode.data;
+//         data.sickDays = randomInt();
+//         itemsToUpdate.push(data);
+//       });
+//       this.gridApi.updateRowData({ update: itemsToUpdate });
+//     }
 
 <!-- <button v-on:click="saveState()">Save State</button> -->
           <!-- :sideBar="sideBar"

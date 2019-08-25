@@ -1,18 +1,19 @@
 <template>
   <div class="safa-grid" :class="onLoadAlign" style="height: 100vh;">
     <div class="button-row" style="margin-bottom: 5px;">
-      <button @click="addItem()">Add Item</button>
-      <button @click="onAddRow()">افزودن</button>
+      <button @click="onRemoveSelected()">حذف انتخاب شده</button>
+      <button @click="updateAndSort()">به روز رسانی</button>
+      <button @click="addRow()">افزودن ردیف</button>
+      <!-- <button @click="onAddRow()">افزودن</button>
       <button @click="onInsertRowAt2()">Insert Row @ 2</button>
       <button @click="updateItems()">Update First 5</button>
-      <button @click="onRemoveSelected()">حذف ردیف</button>
       <button @click="getRowData()">Get Row Data</button>
       <button @click="clearData()">Clear Data</button>
-      <button @click="addItemsAtIndex()">Add Items @ 2</button>
+      <button @click="addItemsAtIndex()">Add Items @ 2</button>-->
     </div>
     <ag-grid-vue
       class="ag-theme-balham"
-      style=" height: calc(100% - 58px);"
+      style=" height: calc(100% - 64px);"
       rowSelection="multiple"
       deltaRowDataMode="true"
       :gridOptions="gridOptions"
@@ -60,36 +61,39 @@ export default {
   },
   data() {
     return {
-      gridOptions: {
-        defaultColDef: {
-          sortable: true,
-          resizable: true,
-          filter: true,
-          sort: "asc",
-          rowStyle: {},
-          editable: true,
-          rowCount: null,
-          sideBar: false,
-          showForm: false
-        },
-        gridApi: null,
-        columnApi: null,
-
-        // statusBar: {
-        //   statusPanels: []
-        // },
-        rowClassRules: null,
-        enableCellChangeFlash: true,
-        defaultColGroupDef: {},
-        columnTypes: {},
-        getRowNodeId: null
-      },
+      gridOptions: null,
+      gridApi: null,
+      columnApi: null,
+      columnDefs: null,
+      rowData: null,
+      rowSelection: null,
+      getRowNodeId: null,
+      defaultColDef: null,
+      enableCellChangeFlash: true,
+      defaultColGroupDef: null,
+      columnTypes: null,
+      rowClassRules: null,
       columnDefs: null,
       rowData: null
     };
   },
   beforeMount() {
+    this.gridOptions = {};
     this.rowClassRules = {};
+    this.gridOptions.getRowNodeId = function(data) {
+      return data.id;
+    };
+    this.gridOptions.defaultColDef = {
+      sortable: true,
+      resizable: true,
+      filter: true,
+      sort: "asc",
+      rowStyle: {},
+      editable: true,
+      rowCount: null,
+      sideBar: false,
+      showForm: false
+    };
   },
   mounted() {
     this.gridApi = this.gridOptions.api;
@@ -115,27 +119,22 @@ export default {
     rowData: "onLoadRows"
   },
   methods: {
+    onRemoveSelected() {
+      var selectedData = this.gridApi.getSelectedRows();
+      var res = this.gridApi.updateRowData({ remove: selectedData });
+    },
+    updateAndSort() {
+      this.gridApi.refreshClientSideRowModel("sort");
+    },
+    addRow() {
+      var newItems = [createNewRowData()];
+      var res = this.gridApi.updateRowData({ add: newItems });
+    },
     onGridReady(params) {
       params.api.sizeColumnsToFit();
     },
-    getRowNodeId(data) {
-      return data.id;
-    },
-    updateSort() {
-      this.gridApi.refreshClientSideRowModel("sort");
-    },
     updateFilter() {
       this.gridApi.refreshClientSideRowModel("filter");
-    },
-    onAddRow() {
-      var newItem = createNewRowData();
-      var res = this.gridApi.updateRowData({ add: [newItem] });
-      // printResult(res);
-    },
-    addItem() {
-      var newItems = [createNewRowData()];
-      var res = this.gridApi.updateRowData({ add: newItems });
-      // printResult(res);
     },
     setDataValue() {
       this.gridApi.forEachNode(function(rowNode) {
@@ -162,7 +161,6 @@ export default {
     }
   }
 };
-let newCount = 1;
 
 function createNewRowData() {
   var newData = {
@@ -174,13 +172,14 @@ function createNewRowData() {
     CI_ResourceManagerConfirmDetails: " جزمیات",
     Comments: "خالی"
   };
-  newCount++;
   return newData;
 }
 </script>
 
 
 <style lang="scss">
+// @import url("https://fonts.googleapis.com/css?family=Tajawal&display=swap");
+@import url("http://cdn.font-store.ir/ganjnameh.css");
 @import "../../node_modules/ag-grid-community/src/styles/ag-grid.scss";
 @import "../../node_modules/ag-grid-community/src/styles/ag-theme-balham/sass/ag-theme-balham.scss";
 .safa-grid {
@@ -189,6 +188,7 @@ function createNewRowData() {
     justify-content: center;
     align-items: center;
     button {
+      font-family: "ganjnameh", sans-serif;
       cursor: pointer;
       margin: 1rem 0 0.4rem 2rem;
       border: none;

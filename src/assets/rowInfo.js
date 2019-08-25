@@ -24,15 +24,6 @@
 // },
 
 export const Sh_ManagerConfirm_Row = [{
-        EumManagerConfirmLicence: 'ok',
-        UserName: 'حامد',
-        ConfirmationDate: '2/2/89',
-        ConfirmationTime: '13:23',
-        CI_ResourceManagerConfirm: 'مدیریت',
-        CI_ResourceManagerConfirmDetails: 'بدون جزمیات',
-        Comments: 'فعلا هیچی',
-    },
-    {
         EumManagerConfirmLicence: 'kind3',
         UserName: 'کلثوم',
         ConfirmationDate: '2/2/89',
@@ -131,6 +122,16 @@ export const Sh_ManagerConfirm_Row = [{
         CI_ResourceManagerConfirmDetails: 'بدون جزمیات',
         Comments: 'فعلا هیچی',
     },
+    {
+        EumManagerConfirmLicence: 'ok',
+        UserName: 'حامد',
+        ConfirmationDate: '2/2/89',
+        ConfirmationTime: '13:23',
+        CI_ResourceManagerConfirm: 'مدیریت',
+        CI_ResourceManagerConfirmDetails: 'بدون جزمیات',
+        Comments: 'فعلا هیچی',
+    },
+
     {
         EumManagerConfirmLicence: 'ok',
         UserName: 'رابعه',

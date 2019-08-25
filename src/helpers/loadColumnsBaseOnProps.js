@@ -6,7 +6,7 @@ export function loadColumnsBaseOnProps(colProps) {
             colId: i,
             headerName: colProps[i].label,
             field: colProps[i].field,
-            width: colProps[i].width,
+            minWidth: colProps[i].width,
             type: "numericColumn",
         });
     }

@@ -4,12 +4,6 @@
       <button @click="onRemoveSelected()">حذف انتخاب شده</button>
       <button @click="updateAndSort()">به روز رسانی</button>
       <button @click="addRow()">افزودن ردیف</button>
-      <!-- <button @click="onAddRow()">افزودن</button>
-      <button @click="getRowData()">Get Row Data</button>
-      <button @click="onInsertRowAt2()">Insert Row @ 2</button>
-      <button @click="updateItems()">Update First 5</button>
-      <button @click="clearData()">Clear Data</button>
-      <button @click="addItemsAtIndex()">Add Items @ 2</button>-->
     </div>
     <ag-grid-vue
       class="ag-theme-balham"
@@ -166,10 +160,16 @@ export default {
 
 
 <style lang="scss">
-// @import url("https://fonts.googleapis.com/css?family=Tajawal&display=swap");
 @import url("http://cdn.font-store.ir/ganjnameh.css");
 @import "../../node_modules/ag-grid-community/src/styles/ag-grid.scss";
 @import "../../node_modules/ag-grid-community/src/styles/ag-theme-balham/sass/ag-theme-balham.scss";
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 .safa-grid {
   .button-row {
     display: flex;

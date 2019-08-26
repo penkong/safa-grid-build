@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "description": "npm package for add reusable layer over grid for Safa company.",
     "private": false,
-    "main": "./dist/SafaGridView.js",
+    "main": "./dist",
     "author": {
         "name": "nazemi-safa",
         "email": "nazemi.works@gmail.com"
@@ -13,11 +13,11 @@
     },
     "scripts": {
         "dev": "vue serve SafaGridView.vue",
+        "build": "vue-cli-service build",
         "buildd": "vue-cli-service build --target lib --name flock ./src/_globals.js",
-        "build-wc": "vue-cli-service build --target wc --name flock 'src/components/*.vue'",
+        "build-wc": "vue-cli-service build --target dist/ --name 'src/index.js'",
         "build-wc-async": "vue-cli-service build --target wc-async --name flock 'src/components/*.vue'",
         "serve": "vue-cli-service serve",
-        "build": "vue-cli-service build",
         "builds": "cross-env NODE_ENV=production webpack --config build/webpack.config.js",
         "lint": "vue-cli-service lint"
     },

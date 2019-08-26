@@ -9,6 +9,7 @@ const Components = {
 export function install(Vue, options) {
     if (install.installed) return;
     install.installed = true;
+    //  Global registration in your
     Object.keys(Components).forEach(name => {
         Vue.component(name, Components[name]);
     });
@@ -31,21 +32,21 @@ if (GlobalVue) {
 }
 
 // To allow use as module (npm/webpack/etc.) export SafaGridVue
-export default Components;
+export {
+    Components
+};
+export default {
+    install: install,
+}
 
 
 
 // packaging-sfc-for-npm
 // import Components from '@flockos/vue-components';
 
-// // Global registration in your main.js/App.vue file
-// Object.entried(Components).forEach((name, component) => {
-//   Vue.component(name, component);
-// });
-
 
 // vue-cli-service build--target lib --name myLib [entry]
 
 //check picture for commands
-// npm run build - bundle
-// npm publish--access public
+// npm run build -bundle
+// npm publish --access public
